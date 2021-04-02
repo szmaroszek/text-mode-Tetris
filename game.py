@@ -27,6 +27,8 @@ while not top:
             if possibleMove(board, active_coordinates, 'left'):
                 board, active_coordinates = pieceLeft(board, active_coordinates)
                 board, active_coordinates, piece, current_piece = pieceDown(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkBottom(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkTop(board, active_coordinates, piece, current_piece)
             else:
                 clear()
                 printBoard(board)
@@ -39,6 +41,8 @@ while not top:
             if possibleMove(board, active_coordinates, 'right'):
                 board, active_coordinates = pieceRight(board, active_coordinates)
                 board, active_coordinates, piece, current_piece = pieceDown(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkBottom(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkTop(board, active_coordinates, piece, current_piece)
             else:
                 clear()
                 printBoard(board)
@@ -56,6 +60,8 @@ while not top:
             if possibleMove(board, active_coordinates, 'rotate', pieces[f'{current_piece[0]}'][current_piece[1]]):
                 board, active_coordinates, piece = pieceRotate(board, active_coordinates, pieces[f'{current_piece[0]}'][current_piece[1]])
                 board, active_coordinates, piece, current_piece = pieceDown(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkBottom(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkTop(board, active_coordinates, piece, current_piece)
             else:
                 clear()
                 printBoard(board)
@@ -73,6 +79,8 @@ while not top:
             if possibleMove(board, active_coordinates, 'rotate', pieces[f'{current_piece[0]}'][current_piece[1]]):
                 board, active_coordinates, piece = pieceRotate(board, active_coordinates, pieces[f'{current_piece[0]}'][current_piece[1]])
                 board, active_coordinates, piece, current_piece = pieceDown(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkBottom(board, active_coordinates, piece, current_piece)
+                board, active_coordinates, piece, current_piece = checkTop(board, active_coordinates, piece, current_piece)
             else:
                 clear()
                 printBoard(board)

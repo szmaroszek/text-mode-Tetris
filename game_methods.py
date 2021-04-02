@@ -58,9 +58,9 @@ def addPiece(board):
         board_line[x_coordinate:x_coordinate + len(line)] = line
         board[y_index] = ''.join(board_line)
         # keep track of active piece position
-        for x_index, point in enumerate(board_line[1:19]):
+        for x_index, point in enumerate(board_line[x_coordinate:x_coordinate + len(line)]):
             if point == '*':
-                active_coordinates.append([x_index +1, y_index])
+                active_coordinates.append([x_index + x_coordinate, y_index])
 
     return board, active_coordinates, piece, current_piece
 
@@ -88,7 +88,7 @@ def pieceDown(board, active_coordinates, piece, current_piece):
             new_coordinates.append([point[0], point[1] + 1])
         for point in new_coordinates:
             # check if piece has any valid moves and if not restart the game
-            if point[1] == 1:
+            if point[1] == 0 or point[1] == 1:
                 board = ['*                  *'] *19 + ['********************']
                 board, active_coordinates, piece, current_piece = addPiece(board)
         return board, active_coordinates, piece, current_piece
@@ -146,6 +146,23 @@ def pieceDelete(board, active_coordinates):
         board[point[1]] = ''.join(board_line)
         
     return board
+
+def checkBottom(board, active_coordinates, piece, current_piece):
+    # check if piece is already at the bottom
+    board_check = list(boardUpdate(board, active_coordinates))
+    for point in active_coordinates:
+        if [point[0], point[1] + 1] in board_check:
+            board, active_coordinates, piece, current_piece = addPiece(board)
+    return board, active_coordinates, piece, current_piece
+
+def checkTop(board, active_coordinates, piece, current_piece):
+    # check if piece is stuck at the top of the board
+    board_check = list(boardUpdate(board, active_coordinates))
+    for point in active_coordinates:
+        if [point[0], 0] in board_check or [point[0], 1] in board_check:
+            board = ['*                  *'] *19 + ['********************']
+            board, active_coordinates, piece, current_piece = addPiece(board)
+        return board, active_coordinates, piece, current_piece
 
 def boardUpdate(board, active_coordinates):
     current_board = []
